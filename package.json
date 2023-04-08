@@ -1,14 +1,21 @@
 {
   "name": "mvp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Evaluation Module for Ed Visto",
   "main": "app.js",
-  "dependencies": {
-  },
   "scripts": {
     "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Intech Mom",
-  "type": "module"
+  "author": "Intech Mom - Diana Montes",
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
+  }
 }
