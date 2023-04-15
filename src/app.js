@@ -1,7 +1,6 @@
-import express from 'express';
-import { port } from './config/index.js';
 import mongoose from 'mongoose';
-import { db_uri } from './config/index.js';
+import express from 'express';
+import { port, db_uri } from './config/index.js';
 
 const app = express();
 
