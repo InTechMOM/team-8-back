@@ -1,9 +1,22 @@
+import morgan from 'morgan';
 import express from 'express';
 import { port } from './config/index.js';
 import mongoose from 'mongoose';
 import { db_uri } from './config/index.js';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import {userRoutes} from './routes/users.js';
 
 const app = express();
+app.use(bodyParser.json());
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false}));
+app.use(morgan("dev"));
+
+//middleware
+app.use(express.json());
+app.use('/', userRoutes);
 
 //routes
 
