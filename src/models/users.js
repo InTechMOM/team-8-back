@@ -1,14 +1,11 @@
-import { date } from 'joi';
 import mongoose from 'mongoose';
 
 const schema = new mongoose.Schema({
   name: {
     type: String,
-    require: true
   },
   lastname: {
     type: String,
-    require: true
   },
   email: {
     type: String,
