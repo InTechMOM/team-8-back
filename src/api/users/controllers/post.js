@@ -1,31 +1,52 @@
 import express from 'express';
-import Boom from '@hapi/boom';
-import { userSquema } from '../../../models/users.js';
-import { joiUserSquema } from '../../../schemas/users.js'
+import validate from '../../../validation/validate.js';
+import { userModel } from '../../../models/users.js';
+import { joiUserSchema } from '../../../schemas/users.js';
+
 const router = express.Router();
 
-//Data Validation with Joi
-const validate = (schema) => {
-  return async (request, response, next) => {
-    try {
-      await schema.validateAsync(request.body);
-      next();
-    } catch (error) {
-      response.send(Boom.badData(error));
+
+
+/**
+ * @swagger
+ * /users:
+ *  post:
+ *    description: Creation API for users
+ *    parameters:
+ *      - name: name
+ *        in: formData
+ *        type: string
+ *      - name: lastname
+ *        in: formData
+ *        type: string.
+ *      - name: email
+ *        in: formData
+ *        type: string
+ *      - name: rol
+ *        in: formData
+ *        type: string
+ *    responses:
+ *      201:
+ *        description: User created
+ *      400:
+ *        description: Bad request
+ */
+
+const createUser = async (request, response) => {
+  try{
+    const userValidation = validate(joiUserSchema);
+    if (userValidation.error){
+      return response.status(400).json(validate.error.details);
     }
+    const newUser = userModel(request.body); 
+    const user = await newUser.save();
+    return response.status(201).json(user); 
+  }catch(error){
+    console.log(error);
+    return response.status(500).json({message: error});
   }
-}
+};
 
-//create user
-router.post('/users', validate(joiUserSquema), (request, response) =>{
-  const user = userSquema(request.body);
-  user
-    .save()
-    .then((data) => response.json(data))
-    .catch((error) => response.json({message: error}));
-    //console.log (response.sendStatus(200));
-});
-
-export const userRoutes = router;
+export default createUser;
 
 

@@ -13,7 +13,8 @@ const schema = new mongoose.Schema({
   },
   rol: {
     type: String,
-    require: true
+    require: true,
+    enum: ['student', 'teacher']
   },
   creationDate: {
     type: Date,
@@ -21,4 +22,4 @@ const schema = new mongoose.Schema({
   }
 });
 
-export const userSquema = mongoose.model('User', schema);
+export const userModel = mongoose.model('User', schema);
