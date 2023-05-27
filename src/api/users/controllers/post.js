@@ -5,32 +5,56 @@ import { joiUserSchema } from '../../../schemas/users.js';
 
 const router = express.Router();
 
-
+/**
+ * @openapi 
+ *  components:
+ *   schemas:
+ *    User:
+ *     type: object
+ *     properties:
+ *      name:
+ *        type: string
+ *      lastname:
+ *        type: string
+ *      email:
+ *        type: string
+ *      rol:
+ *        type: string
+ *     required:
+ *      - email
+ *      - rol
+ *     example:
+ *      name: Diana
+ *      lastname: Montes
+ *      email: dmontes@example.com
+ *      rol: teacher
+ * 
+ */
 
 /**
- * @swagger
+ * @openapi
  * /users:
  *  post:
- *    description: Creation API for users
- *    parameters:
- *      - name: name
- *        in: formData
- *        type: string
- *      - name: lastname
- *        in: formData
- *        type: string.
- *      - name: email
- *        in: formData
- *        type: string
- *      - name: rol
- *        in: formData
- *        type: string
- *    responses:
- *      201:
- *        description: User created
- *      400:
- *        description: Bad request
+ *   summary: Creation of users
+ *   tags: [User]
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       $ref: '#/components/schemas/User'
+ *   responses:
+ *    201:
+ *     description: User created
+ *    400:
+ *     description: Bad request
+ *    409:
+ *     description: Email or name is assigned to another user
+ *    500:
+ *     description: Server error
  */
+
 
 const createUser = async (request, response) => {
   try{
